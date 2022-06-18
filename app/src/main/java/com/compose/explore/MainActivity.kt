@@ -10,7 +10,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -65,9 +66,9 @@ fun MainScree(){
         val (fabmenu) = createRefs()
 
         val list = listOf<FabItems>(
-            FabItems(Icons.Default.Add, "Camera"),
-            FabItems(Icons.Default.Add, "Gallery"),
-            FabItems(Icons.Default.Add, "Files"),
+            FabItems(Icons.Default.PhotoCameraBack, "Camera"),
+            FabItems(Icons.Default.Image, "Gallery"),
+            FabItems(Icons.Default.Description, "Files"),
         )
 
         FabMenu(

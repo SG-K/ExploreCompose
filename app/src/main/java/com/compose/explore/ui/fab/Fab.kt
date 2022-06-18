@@ -13,12 +13,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.PhotoCameraBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -90,7 +93,7 @@ fun FabMenu(
 
             Spacer( modifier = Modifier.height(12.dp) )
 
-            FabClosedButton(
+            FabButton(
                 padding = 16.dp,
                 elevation = 8.dp,
                 rotation = rotation.value,
@@ -125,24 +128,26 @@ fun FabButtonChild(
         ) {
             Spacer( modifier = Modifier.height(8.dp) )
 
-            FabClosedButton(
+            FabButton(
                 rotation = rotation,
                 padding = padding,
                 elevation = elevation,
                 updateRorate = updateRorate,
                 fabItems = fabItems,
-                showText = showText
+                showText = showText,
+                isChild = true
             )
         }
     }
 }
 
 @Composable
-fun FabClosedButton(
+fun FabButton(
     rotation : Float,
     padding : Dp,
     elevation : Dp = 4.dp,
     showText : Boolean = false,
+    isChild : Boolean = false,
     fabItems: FabItems,
     endPadding : Dp = 3.dp,
     updateRorate : () -> Unit
@@ -182,7 +187,7 @@ fun FabClosedButton(
                 .clickable {
                     updateRorate()
                 }
-                .rotate(rotation)
+                .rotate(if (!isChild){rotation} else 0f)
         ){
             Icon(
                 imageVector = fabItems.imageResourceId,
@@ -199,6 +204,21 @@ fun FabClosedButton(
 
 
 @Composable
+@Preview
 fun FabMenuDisplay(){
-//    FabMenu(modifier = Modifier)
+
+    val list = listOf<FabItems>(
+        FabItems(Icons.Default.PhotoCameraBack, "Camera"),
+        FabItems(Icons.Default.Image, "Gallery"),
+        FabItems(Icons.Default.Description, "Files"),
+    )
+
+    FabMenu(
+        modifier = Modifier,
+        childItems = list,
+        fabmenuBackground = Color.Black.copy(alpha = 0.1f)
+    ){
+
+    }
+
 }
