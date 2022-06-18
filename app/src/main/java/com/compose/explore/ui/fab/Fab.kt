@@ -91,7 +91,7 @@ fun FabMenu(
                 }
             }
 
-            Spacer( modifier = Modifier.height(12.dp) )
+            Spacer( modifier = Modifier.height(8.dp) )
 
             FabButton(
                 padding = 16.dp,
@@ -126,7 +126,7 @@ fun FabButtonChild(
         Column(
             modifier = Modifier.padding(end = 4.dp)
         ) {
-            Spacer( modifier = Modifier.height(8.dp) )
+
 
             FabButton(
                 rotation = rotation,
@@ -137,6 +137,8 @@ fun FabButtonChild(
                 showText = showText,
                 isChild = true
             )
+
+            Spacer( modifier = Modifier.height(8.dp) )
         }
     }
 }
