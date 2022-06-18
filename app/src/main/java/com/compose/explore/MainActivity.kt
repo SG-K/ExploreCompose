@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -21,6 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.compose.explore.ui.fab.FabMenu
 import com.compose.explore.ui.fab.models.FabItems
 import com.compose.explore.ui.theme.ExploreComposeTheme
+import com.compose.explore.ui.view_animations.RotatingImage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,12 +65,21 @@ fun MainScree(){
             .background(MaterialTheme.colors.background)
     ) {
 
-        val (fabmenu) = createRefs()
+        val (fabmenu, rotatingImage) = createRefs()
 
         val list = listOf<FabItems>(
             FabItems(Icons.Default.PhotoCameraBack, "Camera"),
             FabItems(Icons.Default.Image, "Gallery"),
             FabItems(Icons.Default.Description, "Files"),
+        )
+
+        RotatingImage(modifier = Modifier
+            .constrainAs(rotatingImage){
+                bottom.linkTo(parent.bottom)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            }
         )
 
         FabMenu(
