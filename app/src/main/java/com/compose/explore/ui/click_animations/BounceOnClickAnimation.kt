@@ -21,38 +21,42 @@ fun BoundOnClick(
     clicked : () -> Unit
 ) {
 
-    val scale = remember{ Animatable( initialValue = 1f ) }
-
-    LaunchedEffect(key1 = isSelected ){
-            launch {
-                scale.animateTo(
-                    targetValue = 0.9f,
-                    animationSpec = tween(
-                        durationMillis = 50
-                    )
-                )
-
-                scale.animateTo(
-                    targetValue = 1f,
-                    animationSpec = tween(
-                        durationMillis = 50
-                    )
-                )
-
-            }
-    }
-
-
     Column(
         modifier = modifier
             .clickable(
                 onClick = clicked
             )
             .size(100.dp)
-            .scale(scale = scale.value)
+            .scale(scale = clickAnim(isSelected).value)
             .background(color)
     ) {
 
     }
 
+}
+
+@Composable
+fun clickAnim(
+    isSelected : Boolean = false,
+) : Animatable<Float, AnimationVector1D>{
+    val scale = remember{ Animatable( initialValue = 1f ) }
+    LaunchedEffect(key1 = isSelected ){
+        launch {
+            scale.animateTo(
+                targetValue = 0.9f,
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            )
+
+            scale.animateTo(
+                targetValue = 1f,
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            )
+
+        }
+    }
+    return scale
 }
