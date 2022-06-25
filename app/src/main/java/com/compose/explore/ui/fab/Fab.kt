@@ -1,5 +1,6 @@
 package com.compose.explore.ui.fab
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -59,7 +60,10 @@ fun FabMenu(
         modifier = modifier
             .fillMaxSize()
             .background(if (fabState == FabState.EXPAND) fabmenuBackground else Color.Transparent)
-            .clickable(enabled = fabState == FabState.EXPAND) {  rootFabClicked() }
+//            .clickable(enabled = fabState == FabState.EXPAND) {
+//                Log.v("sjdhbvjs","fabrootview - state - $fabState")
+//                rootFabClicked()
+//            }
     ) {
 
         val (fabmenu) = createRefs()

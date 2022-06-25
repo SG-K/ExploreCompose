@@ -13,12 +13,14 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.compose.explore.ui.click_animations.BoundOnClick
+import com.compose.explore.ui.click_animations.clickScaleAnim
 import com.compose.explore.ui.fab.FabMenu
 import com.compose.explore.ui.fab.models.FabItems
 import com.compose.explore.ui.theme.ExploreComposeTheme
@@ -72,6 +74,12 @@ fun MainScree(){
             FabItems(Icons.Default.Image, "Gallery"),
             FabItems(Icons.Default.Description, "Files"),
         )
+
+//        clickScaleAnim()
+        var isSelected by remember{ mutableStateOf(false) }
+        BoundOnClick(modifier = Modifier, isSelected = isSelected){
+            isSelected = !isSelected
+        }
 
         RotatingImage(modifier = Modifier
             .constrainAs(rotatingImage){
