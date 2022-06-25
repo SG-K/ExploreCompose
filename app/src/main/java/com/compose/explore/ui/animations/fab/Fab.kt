@@ -1,6 +1,5 @@
-package com.compose.explore.ui.fab
+package com.compose.explore.ui.animations.fab
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -26,9 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.compose.explore.ui.fab.models.FabItems
-import com.compose.explore.ui.fab.models.FabState
-import com.compose.explore.ui.fab.models.getAlternativestate
+import com.compose.explore.ui.animations.fab.models.FabItems
+import com.compose.explore.ui.animations.fab.models.FabState
+import com.compose.explore.ui.animations.fab.models.getAlternativestate
 import com.compose.explore.ui.theme.Purple500
 import kotlinx.coroutines.launch
 

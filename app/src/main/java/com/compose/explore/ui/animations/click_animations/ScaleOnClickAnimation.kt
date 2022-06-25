@@ -1,4 +1,4 @@
-package com.compose.explore.ui.click_animations
+package com.compose.explore.ui.animations.click_animations
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun BoundOnClick(
+fun ClickAnimationSample(
     modifier: Modifier,
     isSelected : Boolean = false,
     color : Color = if (isSelected) Color.Red else Color.Blue,
@@ -27,7 +27,7 @@ fun BoundOnClick(
                 onClick = clicked
             )
             .size(100.dp)
-            .scale(scale = clickAnim(isSelected).value)
+            .scale(scale = scaleOnClick(isSelected).value)
             .background(color)
     ) {
 
@@ -36,7 +36,7 @@ fun BoundOnClick(
 }
 
 @Composable
-fun clickAnim(
+fun scaleOnClick(
     isSelected : Boolean = false,
 ) : Animatable<Float, AnimationVector1D>{
     val scale = remember{ Animatable( initialValue = 1f ) }

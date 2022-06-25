@@ -5,26 +5,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.compose.explore.ui.click_animations.BoundOnClick
-import com.compose.explore.ui.click_animations.clickScaleAnim
-import com.compose.explore.ui.fab.FabMenu
-import com.compose.explore.ui.fab.models.FabItems
+import com.compose.explore.ui.animations.click_animations.ClickAnimationSample
+import com.compose.explore.ui.animations.fab.FabMenu
+import com.compose.explore.ui.animations.fab.models.FabItems
 import com.compose.explore.ui.theme.ExploreComposeTheme
-import com.compose.explore.ui.view_animations.RotatingImage
+import com.compose.explore.ui.animations.view_animations.RotatingImage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +70,8 @@ fun MainScree(){
             FabItems(Icons.Default.Description, "Files"),
         )
 
-//        clickScaleAnim()
         var isSelected by remember{ mutableStateOf(false) }
-        BoundOnClick(modifier = Modifier, isSelected = isSelected){
+        ClickAnimationSample(modifier = Modifier, isSelected = isSelected){
             isSelected = !isSelected
         }
 

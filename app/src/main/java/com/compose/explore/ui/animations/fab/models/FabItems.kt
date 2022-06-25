@@ -1,6 +1,5 @@
-package com.compose.explore.ui.fab.models
+package com.compose.explore.ui.animations.fab.models
 
-import android.media.Image
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class FabItems(

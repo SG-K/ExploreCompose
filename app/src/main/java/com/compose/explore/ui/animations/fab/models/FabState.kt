@@ -1,4 +1,4 @@
-package com.compose.explore.ui.fab.models
+package com.compose.explore.ui.animations.fab.models
 
 enum class FabState {
 
