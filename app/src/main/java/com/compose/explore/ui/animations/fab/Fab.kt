@@ -25,24 +25,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.compose.explore.ui.animations.fab.models.FabItems
+import com.compose.explore.ui.animations.fab.models.FabItem
 import com.compose.explore.ui.animations.fab.models.FabState
 import com.compose.explore.ui.animations.fab.models.getAlternativestate
 import com.compose.explore.ui.theme.Purple500
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalAnimationApi::class)
+
 @Composable
 fun FabMenu(
-    modifier: Modifier,
-    fabmenuBackground : Color = Color.Transparent,
-    childItems : List<FabItems>,
-    childItemClick : (FabItems) -> Unit
+    modifier: Modifier = Modifier,
+    fabmenuBackground : Color = Color.White,
+    childItems : List<FabItem>,
+    childItemClick : (FabItem) -> Unit
 ){
-
-    var fabState by remember { mutableStateOf(FabState.COLLAPSE) }
     val rotation = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
+    var fabState by remember { mutableStateOf(FabState.COLLAPSE) }
     val rootFabClicked = {
         scope.launch {
             fabState = fabState.getAlternativestate()
@@ -55,23 +54,19 @@ fun FabMenu(
         }
     }
 
+
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
             .background(if (fabState == FabState.EXPAND) fabmenuBackground else Color.Transparent)
-//            .clickable(enabled = fabState == FabState.EXPAND) {
-//                Log.v("sjdhbvjs","fabrootview - state - $fabState")
-//                rootFabClicked()
-//            }
     ) {
-
         val (fabmenu) = createRefs()
 
         Column(
             horizontalAlignment = Alignment.End,
             modifier = Modifier
                 .padding(20.dp)
-                .constrainAs(fabmenu){
+                .constrainAs(fabmenu) {
                     bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
                 }
@@ -84,13 +79,10 @@ fun FabMenu(
                     FabButtonChild(
                         fabState = fabState,
                         padding = 8.dp,
-                        rotation = rotation.value,
-                        fabItems = _item,
-                        showText = true,
-                        updateRorate = {
-                            childItemClick(_item)
-                        }
-                    )
+                        fabItem = _item
+                    ){
+                        childItemClick(_item)
+                    }
                 }
             }
 
@@ -100,25 +92,23 @@ fun FabMenu(
                 padding = 16.dp,
                 elevation = 8.dp,
                 rotation = rotation.value,
-                fabItems = FabItems(Icons.Default.Add,""),
+                fabItem = FabItem(Icons.Default.Add,"", false),
                 endPadding = 0.dp,
-                updateRorate = {rootFabClicked()}
+                buttonClick = {rootFabClicked()}
             )
         }
-
     }
+
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FabButtonChild(
     fabState : FabState,
-    rotation : Float,
     padding : Dp,
     elevation : Dp = 4.dp,
-    fabItems: FabItems,
-    showText : Boolean = false,
-    updateRorate : () -> Unit
+    fabItem: FabItem,
+    childClick : () -> Unit
 ){
     AnimatedVisibility(
         visible = fabState == FabState.EXPAND,
@@ -130,18 +120,16 @@ fun FabButtonChild(
             modifier = Modifier.padding(end = 4.dp)
         ) {
 
-
             FabButton(
-                rotation = rotation,
+                rotation = 0f,
                 padding = padding,
                 elevation = elevation,
-                updateRorate = updateRorate,
-                fabItems = fabItems,
-                showText = showText,
-                isChild = true
+                buttonClick = childClick,
+                fabItem = fabItem
             )
 
             Spacer( modifier = Modifier.height(8.dp) )
+
         }
     }
 }
@@ -149,28 +137,26 @@ fun FabButtonChild(
 @Composable
 fun FabButton(
     rotation : Float,
-    padding : Dp,
     elevation : Dp = 4.dp,
-    showText : Boolean = false,
-    isChild : Boolean = false,
-    fabItems: FabItems,
     endPadding : Dp = 3.dp,
-    updateRorate : () -> Unit
+    padding : Dp,
+    fabItem: FabItem,
+    buttonClick : () -> Unit
 ){
 
-    Row(
+    Row (
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(end = endPadding)
-    ) {
+    ){
 
-        AnimatedVisibility(visible = showText && fabItems.title.isNotEmpty()) {
+        if (fabItem.title.isNotEmpty()){
             Card (
                 elevation = elevation,
                 backgroundColor = Purple500,
             ){
                 Text(
-                    text = fabItems.title,
+                    text = fabItem.title,
                     modifier = Modifier.padding(
                         start = 10.dp,
                         end = 10.dp,
@@ -179,10 +165,9 @@ fun FabButton(
                     )
                 )
             }
+
+            Spacer(modifier = Modifier.width(10.dp))
         }
-
-        Spacer(modifier = Modifier.width(10.dp))
-
 
         Card (
             elevation = elevation,
@@ -190,32 +175,33 @@ fun FabButton(
             shape = CircleShape,
             modifier = Modifier
                 .clickable {
-                    updateRorate()
+                    buttonClick()
                 }
-                .rotate(if (!isChild){rotation} else 0f)
+                .rotate(
+                    if (!fabItem.isChild) {
+                        rotation
+                    } else 0f
+                )
         ){
             Icon(
-                imageVector = fabItems.imageResourceId,
-                contentDescription = "Fab Button",
+                imageVector = fabItem.imageResource,
+                contentDescription = fabItem.title,
                 tint = Color.White,
                 modifier = Modifier
                     .padding(padding)
             )
         }
-
     }
-
 }
-
 
 @Composable
 @Preview
 fun FabMenuDisplay(){
 
-    val list = listOf<FabItems>(
-        FabItems(Icons.Default.PhotoCameraBack, "Camera"),
-        FabItems(Icons.Default.Image, "Gallery"),
-        FabItems(Icons.Default.Description, "Files"),
+    val list = listOf<FabItem>(
+        FabItem(Icons.Default.PhotoCameraBack, "Camera", true),
+        FabItem(Icons.Default.Image, "Gallery", true),
+        FabItem(Icons.Default.Description, "Files", true),
     )
 
     FabMenu(
