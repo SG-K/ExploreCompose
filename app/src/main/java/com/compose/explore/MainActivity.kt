@@ -70,18 +70,13 @@ fun MainScree(){
 //        }
 
 
-        var isSelected by remember{ mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            ButtonRefresh(isSelected){
-                isSelected = !isSelected
-            }
-
+            ButtonRefresh()
         }
 
         RotatingImage(modifier = Modifier
