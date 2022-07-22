@@ -20,6 +20,8 @@ import com.compose.explore.ui.animations.view_animations.ButtonRefresh
 import com.compose.explore.ui.theme.ExploreComposeTheme
 import com.compose.explore.ui.animations.view_animations.RotatingImage
 import androidx.compose.material.*
+import com.compose.explore.ui.animations.content_animations.CrossFaseLayouts
+import com.compose.explore.ui.animations.content_animations.NumberUpdateAnimationView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
                      modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScree()
+                    MainScreen()
 //                    Greeting("Android")
                 }
             }
@@ -54,7 +56,20 @@ fun DefaultPreview() {
 
 @Composable
 @Preview
-fun MainScree(){
+fun MainScreenContentAnimations(){
+
+    Box(
+        contentAlignment = Alignment.Center
+    ) {
+//        NumberUpdateAnimationView()
+        CrossFaseLayouts()
+    }
+
+}
+
+@Composable
+@Preview
+fun MainScreen(){
 
     ConstraintLayout(
         modifier = Modifier
